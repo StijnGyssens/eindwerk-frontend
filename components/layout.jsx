@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <>
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -19,7 +19,8 @@ const Layout = ({ children }) => {
           <a>Join the site</a>
         </Link>
       </nav>
-    </div>
+      <main>{children}</main>
+    </>
   );
 };
 
