@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 
 import Layout from "../components/layout";
 import axios from "axios";
@@ -8,6 +9,7 @@ const subscribe = ({ fight, region, timeperiode }) => {
   const fights = fight["hydra:member"];
   const regions = region["hydra:member"];
   const timeperiodes = timeperiode["hydra:member"];
+  const router = useRouter();
 
   const {
     register,
@@ -17,7 +19,6 @@ const subscribe = ({ fight, region, timeperiode }) => {
 
   const onSubmit = (data) => {
     data = JSON.stringify(data);
-    console.log(data);
     axios
       .post(`${process.env.NEXT_PUBLIC_BASEPATH}/groups`, data, {
         headers: {
@@ -25,7 +26,10 @@ const subscribe = ({ fight, region, timeperiode }) => {
           "Content-Type": "application/ld+json",
         },
       })
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        router.push("/list");
+      })
       .catch((error) => console.error(error));
   };
   console.log(errors);
