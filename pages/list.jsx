@@ -42,7 +42,7 @@ const list = ({ data }) => {
                 historicalRegion: { historicalRegion },
                 timeperiode: { timeperiode },
               }) => (
-                <Tr>
+                <Tr key={id}>
                   <Td>{name}</Td>
                   <Td>{fightingStyle}</Td>
                   <Td>{historicalRegion}</Td>

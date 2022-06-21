@@ -54,7 +54,7 @@ export default function Home({ data }) {
 
 export const getStaticProps = async () => {
   const { data } = await axios.get(
-    `https://wdev2.be/fs_stijn/eindwerk/api/styles`
+    `${process.env.NEXT_PUBLIC_BASEPATH}/styles`
   );
   return {
     props: { data },

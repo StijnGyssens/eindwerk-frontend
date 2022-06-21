@@ -1,68 +1,73 @@
-import {
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  HStack,
-  Input,
-  Radio,
-  RadioGroup,
-  Textarea,
-} from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+
 import Layout from "../components/layout";
 import axios from "axios";
+import { Input, Select, Textarea } from "@chakra-ui/react";
 
 const subscribe = ({ fight, region, timeperiode }) => {
   const fights = fight["hydra:member"];
   const regions = region["hydra:member"];
   const timeperiodes = timeperiode["hydra:member"];
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    data = JSON.stringify(data);
+    console.log(data);
+    axios
+      .post(`${process.env.NEXT_PUBLIC_BASEPATH}/groups`, data, {
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/ld+json",
+        },
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.error(error));
+  };
+  console.log(errors);
+
   return (
     <Layout>
-      <form action="">
-        <FormControl isRequired>
-          <FormLabel htmlFor="name">Name</FormLabel>
-          <Input id="name" type="text" />
-          <FormErrorMessage>Type a name</FormErrorMessage>
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel htmlFor="description">Description</FormLabel>
-          <Textarea id="description" />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel htmlFor="location">Location</FormLabel>
-          <Input id="location" type="text" />
-          <FormErrorMessage>Give a traininglocation</FormErrorMessage>
-        </FormControl>
-        <FormControl as="fieldset">
-          <FormLabel as="legend">Fight style</FormLabel>
-          <RadioGroup defaultValue="">
-            <HStack spacing="24px">
-              <Radio value="">none</Radio>
-              {fights.map((f) => (
-                <Radio value={f["@id"]}>{f.fightingStyle}</Radio>
-              ))}
-            </HStack>
-          </RadioGroup>
-        </FormControl>
-        <FormControl as="fieldset">
-          <FormLabel as="legend">Historical region</FormLabel>
-          <RadioGroup defaultValue="">
-            <HStack spacing="24px">
-              {regions.map((r) => (
-                <Radio value={r["@id"]}>{r.historicalRegion}</Radio>
-              ))}
-            </HStack>
-          </RadioGroup>
-        </FormControl>
-        <FormControl as="fieldset">
-          <FormLabel as="legend">Timeperiode</FormLabel>
-          <RadioGroup defaultValue="">
-            <HStack spacing="24px">
-              {timeperiodes.map((t) => (
-                <Radio value={t["@id"]}>{t.timeperiode}</Radio>
-              ))}
-            </HStack>
-          </RadioGroup>
-        </FormControl>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Input
+          type="text"
+          placeholder="Name"
+          {...register("name", { required: true })}
+        />
+        <Input
+          type="text"
+          placeholder="location"
+          {...register("location", { required: true })}
+        />
+        <Textarea {...register("description", {})} />
+        <Select {...register("fightingStyle")}>
+          <option value="">none</option>
+          {fights.map((f) => (
+            <option key={f["@id"]} value={f["@id"]}>
+              {f.fightingStyle}
+            </option>
+          ))}
+        </Select>
+        <Select {...register("historicalRegion", { required: true })}>
+          {regions.map((r) => (
+            <option key={r["@id"]} value={r["@id"]}>
+              {r.historicalRegion}
+            </option>
+          ))}
+        </Select>
+        <Select {...register("timeperiode", { required: true })}>
+          {timeperiodes.map((t) => (
+            <option key={t["@id"]} value={t["@id"]}>
+              {t.timeperiode}
+            </option>
+          ))}
+        </Select>
+
+        <Input type="submit" />
       </form>
     </Layout>
   );
@@ -71,13 +76,13 @@ const subscribe = ({ fight, region, timeperiode }) => {
 export default subscribe;
 export const getStaticProps = async () => {
   const { data: fight } = await axios.get(
-    `https://wdev2.be/fs_stijn/eindwerk/api/styles`
+    `${process.env.NEXT_PUBLIC_BASEPATH}/styles`
   );
   const { data: region } = await axios.get(
-    `https://wdev2.be/fs_stijn/eindwerk/api/regions`
+    `${process.env.NEXT_PUBLIC_BASEPATH}/regions`
   );
   const { data: timeperiode } = await axios.get(
-    `https://wdev2.be/fs_stijn/eindwerk/api/timeperiodes`
+    `${process.env.NEXT_PUBLIC_BASEPATH}/timeperiodes`
   );
   return {
     props: { fight, region, timeperiode },
