@@ -1,10 +1,11 @@
 import { Container, Flex } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
+import styles from "./layout.module.scss";
 
 const Layout = ({ children, title }) => {
   return (
-    <Container minH="100vh" maxW="container.xl" p={0}>
+    <Container maxW="container.xl" p={0} className={styles.container}>
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -22,7 +23,7 @@ const Layout = ({ children, title }) => {
           </Link>
         </Flex>
       </nav>
-      <Container minH="max" maxW="container.xl">
+      <Container maxW="container.xl">
         <main>{children}</main>
       </Container>
 

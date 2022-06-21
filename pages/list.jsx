@@ -1,4 +1,5 @@
 import {
+  Link,
   Table,
   TableCaption,
   TableContainer,
@@ -8,11 +9,14 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import slug from "slug";
 import Layout from "../components/layout";
+import axios from "axios";
 
-const list = () => {
+const list = ({ data }) => {
+  const groups = data["hydra:member"];
   return (
-    <Layout>
+    <Layout title="list">
       <TableContainer>
         <Table>
           <TableCaption placement="top">
@@ -25,23 +29,31 @@ const list = () => {
               <Th>Historical region</Th>
               <Th>Timeperiode</Th>
               <Th>Training location</Th>
+              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>Halvard</Td>
-              <Td>Eastern</Td>
-              <Td>Viking</Td>
-              <Td>Early middle ages</Td>
-              <Td>Kortrijk</Td>
-            </Tr>
-            <Tr>
-              <Td>Halvard</Td>
-              <Td>Eastern</Td>
-              <Td>Viking</Td>
-              <Td>Early middle ages</Td>
-              <Td>Kortrijk</Td>
-            </Tr>
+            {groups.map(
+              ({
+                id,
+                name,
+                location,
+                fightingStyle: { fightingStyle },
+                historicalRegion: { historicalRegion },
+                timeperiode: { timeperiode },
+              }) => (
+                <Tr>
+                  <Td>{name}</Td>
+                  <Td>{fightingStyle}</Td>
+                  <Td>{historicalRegion}</Td>
+                  <Td>{timeperiode}</Td>
+                  <Td>{location}</Td>
+                  <Td>
+                    <Link href={`/detail/${id}/${slug(name)}`}>more info</Link>
+                  </Td>
+                </Tr>
+              )
+            )}
           </Tbody>
         </Table>
       </TableContainer>
@@ -50,3 +62,13 @@ const list = () => {
 };
 
 export default list;
+
+export const getStaticProps = async () => {
+  const { data } = await axios.get(
+    `https://wdev2.be/fs_stijn/eindwerk/api/groups`
+  );
+  return {
+    props: { data },
+    revalidate: 60,
+  };
+};
