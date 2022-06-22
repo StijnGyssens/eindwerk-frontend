@@ -5,7 +5,7 @@ import Layout from "../components/layout";
 import axios from "axios";
 import { Input, Select, Textarea } from "@chakra-ui/react";
 
-const subscribe = ({ fight, region, timeperiode }) => {
+const Subscribe = ({ fight, region, timeperiode }) => {
   const fights = fight["hydra:member"];
   const regions = region["hydra:member"];
   const timeperiodes = timeperiode["hydra:member"];
@@ -77,7 +77,7 @@ const subscribe = ({ fight, region, timeperiode }) => {
   );
 };
 
-export default subscribe;
+export default Subscribe;
 export const getStaticProps = async () => {
   const { data: fight } = await axios.get(
     `${process.env.NEXT_PUBLIC_BASEPATH}/styles`
