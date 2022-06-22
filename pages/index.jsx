@@ -30,8 +30,8 @@ export default function Home({ data }) {
       </Text>
       <Text>
         For reenactment groups: if you want to join the site just fill in the
-        form at "Join the site", if you have a different fighting style than in
-        the options you can contact me
+        form at &quot;Join the site&quot;, if you have a different fighting
+        style than in the options you can contact me
       </Text>
       <Heading as={"h3"} size="lg">
         Fighting styles
