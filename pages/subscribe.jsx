@@ -25,6 +25,7 @@ const Subscribe = ({ fight, region, timeperiode }) => {
           accept: "application/json",
           "Content-Type": "application/ld+json",
         },
+        withCredentials: true,
       })
       .then((response) => {
         console.log(response);
