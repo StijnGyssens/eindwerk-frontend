@@ -40,7 +40,7 @@ export default function Home({ data }) {
         <Table>
           <Tbody>
             {fight.map(({ fightingStyle, description }) => (
-              <Tr>
+              <Tr key={fightingStyle}>
                 <Td>{fightingStyle}</Td>
                 <Td>{description}</Td>
               </Tr>
