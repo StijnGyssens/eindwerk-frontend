@@ -22,7 +22,7 @@ export default function Loginform() {
     console.log(token); */
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
-      { method: "post", credentials: "include", body: JSON.stringify(data) }
+      { method: "POST", credentials: "include", body: JSON.stringify(data) }
     );
     console.log(response);
   };
