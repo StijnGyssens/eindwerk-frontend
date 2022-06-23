@@ -18,12 +18,7 @@ export default function Loginform() {
   const onSubmit = async (data) => {
     const {
       data: { token },
-    } = await instance.post(`/login_check`, data, {
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/ld+json",
-      },
-    });
+    } = await instance.post(`/login_check`, data);
     console.log(token);
   };
 
