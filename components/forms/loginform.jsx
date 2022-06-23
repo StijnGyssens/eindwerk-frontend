@@ -11,20 +11,19 @@ export default function Loginform() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    axios
-      .post(`${process.env.NEXT_PUBLIC_BASEPATH}/login_check`, data, {
+  const onSubmit = async (data) => {
+    const { data } = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
+      data,
+      {
         headers: {
           accept: "application/json",
           "Content-Type": "application/ld+json",
         },
         withCredentials: true,
-      })
-      .then((response) => {
-        console.log(response);
-        //router.push("/subscribe");
-      })
-      .catch((error) => console.error(error));
+      }
+    );
+    console.log(data);
   };
 
   console.log(errors);
