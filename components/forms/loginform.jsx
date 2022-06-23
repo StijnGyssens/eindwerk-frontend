@@ -16,10 +16,15 @@ export default function Loginform() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const {
+    /* const {
       data: { token },
     } = await instance.post(`/login_check`, data);
-    console.log(token);
+    console.log(token); */
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
+      { method: "post", credentials: "include", body: JSON.stringify(data) }
+    );
+    console.log(response);
   };
 
   console.log(errors);
