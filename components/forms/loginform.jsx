@@ -14,7 +14,11 @@ export default function Loginform() {
   const onSubmit = async (data) => {
     const {
       data: { token },
-    } = await axios.post(`/login_check`, data, { withCredentials: true });
+    } = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
+      data,
+      { withCredentials: true }
+    );
     console.log(token);
     /* const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
