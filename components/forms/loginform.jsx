@@ -4,10 +4,6 @@ import { useRouter } from "next/router";
 
 export default function Loginform() {
   const router = useRouter();
-  const instance = axios.create({
-    withCredentials: true,
-    baseURL: process.env.NEXT_PUBLIC_BASEPATH,
-  });
 
   const {
     register,
@@ -18,7 +14,7 @@ export default function Loginform() {
   const onSubmit = async (data) => {
     const {
       data: { token },
-    } = await instance.post(`/login_check`, data);
+    } = await axios.post(`/login_check`, data, { withCredentials: true });
     console.log(token);
     /* const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
