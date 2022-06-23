@@ -22,7 +22,7 @@ export default function Loginform() {
       })
       .then((response) => {
         console.log(response);
-        router.push("/subscribe");
+        //router.push("/subscribe");
       })
       .catch((error) => console.error(error));
   };
