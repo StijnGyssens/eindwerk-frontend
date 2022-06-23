@@ -21,8 +21,8 @@ export default function Loginform() {
         headers: {
           accept: "application/json",
           "Content-Type": "application/ld+json",
+          withCredentials: true,
         },
-        withCredentials: true,
       }
     );
     console.log(token);
