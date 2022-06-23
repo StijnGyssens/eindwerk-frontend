@@ -12,7 +12,7 @@ export default function Loginform() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const { data } = await axios.post(
+    const { data: token } = await axios.post(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
       data,
       {
@@ -23,7 +23,7 @@ export default function Loginform() {
         withCredentials: true,
       }
     );
-    console.log(data);
+    console.log(token);
   };
 
   console.log(errors);
