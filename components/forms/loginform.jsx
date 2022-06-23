@@ -4,6 +4,10 @@ import { useRouter } from "next/router";
 
 export default function Loginform() {
   const router = useRouter();
+  const instance = axios.create({
+    withCredentials: true,
+    baseURL: process.env.NEXT_PUBLIC_BASEPATH,
+  });
 
   const {
     register,
@@ -14,17 +18,12 @@ export default function Loginform() {
   const onSubmit = async (data) => {
     const {
       data: { token },
-    } = await axios.post(
-      `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
-      data,
-      {
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/ld+json",
-          withCredentials: true,
-        },
-      }
-    );
+    } = await instance.post(`/login_check`, data, {
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/ld+json",
+      },
+    });
     console.log(token);
   };
 
