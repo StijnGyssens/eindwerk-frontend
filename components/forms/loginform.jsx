@@ -20,9 +20,9 @@ export default function Loginform() {
       data: { token },
     } = await instance.post(`/login_check`, data);
     console.log(token); */
-    const response = await axios(
+    const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
-      { method: "POST", credentials: "include", body: data }
+      { method: "POST", credentials: "include", body: JSON.stringify(data) }
     );
     console.log(response);
   };
