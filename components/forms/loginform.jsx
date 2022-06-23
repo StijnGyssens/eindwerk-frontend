@@ -12,19 +12,24 @@ export default function Loginform() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const {
+    /* const {
       data: { token },
     } = await axios.post(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
       data,
       { withCredentials: true }
     );
-    console.log(token);
-    /* const response = await fetch(
+    console.log(token); */
+    const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
-      { method: "POST", credentials: "include", body: JSON.stringify(data) }
+      {
+        method: "POST",
+        mode: "cors",
+        credentials: "include",
+        body: JSON.stringify(data),
+      }
     );
-    console.log(response); */
+    console.log(response);
   };
 
   console.log(errors);
