@@ -18,7 +18,7 @@ const Layout = ({ children, title }) => {
           <Link href="/list">
             <a>Reenactment groups</a>
           </Link>
-          <Link href="/subscribe">
+          <Link href="/login_register">
             <a>Join the site</a>
           </Link>
         </Flex>

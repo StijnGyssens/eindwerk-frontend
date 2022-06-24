@@ -2,7 +2,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
-export default function Loginform() {
+export default function Loginform({ redirect, modal }) {
   const router = useRouter();
 
   const {
@@ -20,6 +20,12 @@ export default function Loginform() {
       { withCredentials: true }
     );
     console.log(token);
+    if (redirect) {
+      router.push(redirect);
+    }
+    if (modal) {
+      onClose();
+    }
     /* const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
       { method: "POST", credentials: "include", body: JSON.stringify(data) }
