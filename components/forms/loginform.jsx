@@ -5,7 +5,6 @@ import { useDisclosure } from "@chakra-ui/react";
 
 export default function Loginform({ redirect, modal }) {
   const router = useRouter();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
     register,
@@ -14,6 +13,7 @@ export default function Loginform({ redirect, modal }) {
   } = useForm();
 
   const onSubmit = async (data) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const {
       data: { token },
     } = await axios.post(
