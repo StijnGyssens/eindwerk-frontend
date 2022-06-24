@@ -14,8 +14,9 @@ import {
 } from "@chakra-ui/react";
 import Loginform from "../../../components/forms/loginform";
 
-const detail = ({ id, group }) => {
+const Detail = ({ id, group }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Layout>
       <p>name {group.name}</p>
@@ -57,7 +58,7 @@ const detail = ({ id, group }) => {
   );
 };
 
-export default detail;
+export default Detail;
 
 export async function getStaticPaths() {
   const { data: groups } = await axios.get(
