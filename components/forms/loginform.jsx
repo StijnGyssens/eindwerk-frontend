@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useDisclosure } from "@chakra-ui/react";
 
 export default function Loginform({ redirect, modal }) {
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
     register,
