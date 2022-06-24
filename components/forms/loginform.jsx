@@ -1,9 +1,15 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import { userContext } from "../../pages/_app";
 
 export default function Loginform({ redirect, onClose = false }) {
   const router = useRouter();
+
+  const {
+    userid: { value, change },
+  } = useContext(userContext);
 
   const {
     register,
@@ -18,6 +24,7 @@ export default function Loginform({ redirect, onClose = false }) {
       { withCredentials: true }
     );
     console.log(token);
+    change(token.id);
     if (redirect) {
       router.push(redirect);
     }
