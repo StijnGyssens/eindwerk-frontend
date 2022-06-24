@@ -26,7 +26,7 @@ export default function Loginform({ redirect, modal }) {
       router.push(redirect);
     }
     if (modal) {
-      onClose();
+      onClose;
     }
     /* const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
