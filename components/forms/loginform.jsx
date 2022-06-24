@@ -12,12 +12,12 @@ export default function Loginform({ redirect, onClose = false }) {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const { data } = await axios.post(
+    const { data: token } = await axios.post(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,
       data,
       { withCredentials: true }
     );
-    console.log(data);
+    console.log(token);
     if (redirect) {
       router.push(redirect);
     }
