@@ -3,9 +3,8 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useDisclosure } from "@chakra-ui/react";
 
-export default function Loginform({ redirect, modal }) {
+export default function Loginform({ redirect }) {
   const router = useRouter();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const {
     register,
@@ -24,9 +23,6 @@ export default function Loginform({ redirect, modal }) {
     console.log(token);
     if (redirect) {
       router.push(redirect);
-    }
-    if (modal) {
-      onClose;
     }
     /* const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,

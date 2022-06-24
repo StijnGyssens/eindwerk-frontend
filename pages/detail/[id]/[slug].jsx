@@ -47,7 +47,7 @@ const Detail = ({ id, group }) => {
           <ModalHeader>log in</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Loginform modal />
+            <Loginform onSubmit={onClose} />
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>close</Button>
