@@ -1,9 +1,8 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { useDisclosure } from "@chakra-ui/react";
 
-export default function Loginform({ redirect }) {
+export default function Loginform({ redirect, onClose = false }) {
   const router = useRouter();
 
   const {
@@ -23,6 +22,9 @@ export default function Loginform({ redirect }) {
     console.log(token);
     if (redirect) {
       router.push(redirect);
+    }
+    if (onClose) {
+      onClose();
     }
     /* const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/login_check`,

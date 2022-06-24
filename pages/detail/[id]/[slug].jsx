@@ -47,7 +47,7 @@ const Detail = ({ id, group }) => {
           <ModalHeader>log in</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Loginform onSubmit={onClose} />
+            <Loginform onClose={onClose} />
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>close</Button>
@@ -79,6 +79,6 @@ export const getStaticProps = async (context) => {
   );
   return {
     props: { id, group },
-    revalidate: 60,
+    revalidate: 10,
   };
 };
