@@ -10,12 +10,10 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
 } from "@chakra-ui/react";
 import Loginform from "../../../components/forms/loginform";
 
 const detail = ({ id, group }) => {
-  console.log(group);
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Layout>
