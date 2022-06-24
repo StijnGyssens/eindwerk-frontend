@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 import "../styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
-  const [user, setUser] = useState(0);
+  const [user, setUser] = useState();
   const data = {
     userid: {
       value: user,

@@ -23,7 +23,6 @@ export default function Loginform({ redirect, onClose = false }) {
       data,
       { withCredentials: true }
     );
-    console.log(token);
     change(token.id);
     if (redirect) {
       router.push(redirect);
