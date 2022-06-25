@@ -10,6 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export default function TimeModal({ allTimes }) {
   const times = allTimes["hydra:member"];
@@ -20,7 +21,15 @@ export default function TimeModal({ allTimes }) {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(JSON.stringify(data));
+    data = JSON.stringify(data);
+    console.log(data);
+    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group}`, data, {
+      headers: {
+        accept: "application/ld+json",
+        "Content-Type": "application/merge-patch+json",
+      },
+      withCredentials: true,
+    });
     onClose();
   };
   /* console.log(errors); */

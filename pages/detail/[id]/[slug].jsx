@@ -33,11 +33,11 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
     <Layout>
       <p>
         name {group.name}
-        {value && <NameModal nameG={group.name} />}
+        {value && <NameModal nameG={group.name} group={id} />}
       </p>
       <p>
         description: {group.description}
-        {value && <DescriptionModal descr={group.description} />}
+        {value && <DescriptionModal descr={group.description} group={id} />}
       </p>
       {group.events.length > 0 && (
         <div>
@@ -52,6 +52,7 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
           allEvents={event}
           events={group.events.map((e) => e["@id"])}
           groupid={group["@id"]}
+          group={id}
         />
       )}
       <div>Fighting style: {group.fightingStyle.fightingStyle}</div>
@@ -71,12 +72,13 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
               allMembers={member}
               members={group.members.map((m) => m["@id"])}
               groupid={group["@id"]}
+              group={id}
             />
           )}
         </div>
       )}
       <p>timeperiode: {group.timeperiode.timeperiode}</p>
-      {value && <TimeModal allTimes={timeperiode} />}
+      {value && <TimeModal allTimes={timeperiode} group={id} />}
       <Button onClick={onOpen}>login</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
