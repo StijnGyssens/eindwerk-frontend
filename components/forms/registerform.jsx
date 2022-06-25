@@ -19,7 +19,6 @@ export default function Register() {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    data.groups = [data.groups];
     data = JSON.stringify(data);
     console.log(data);
     axios.post(`${process.env.NEXT_PUBLIC_BASEPATH}/members`, data, {
