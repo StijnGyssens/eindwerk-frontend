@@ -1,5 +1,9 @@
 import {
   Button,
+  Checkbox,
+  FormControl,
+  FormLabel,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -43,33 +47,51 @@ export default function Register() {
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <input
-                type="email"
-                placeholder="email"
-                {...register("email", { required: true })}
-              />
-              <input
-                type="password"
-                placeholder="password"
-                {...register("simplePassword", { required: true })}
-              />
-              <input
-                type="text"
-                placeholder="firstName"
-                {...register("firstName", { required: true })}
-              />
-              <input
-                type="text"
-                placeholder="lastName"
-                {...register("lastName", { required: true })}
-              />
-              <input
-                type="checkbox"
+              <FormControl isRequired>
+                <FormLabel htmlFor="email">Email</FormLabel>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="email"
+                  {...register("email", { required: true })}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="password"
+                  {...register("simplePassword", { required: true })}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="firstName">First name</FormLabel>
+                <Input
+                  id="firstName"
+                  type="text"
+                  placeholder="first name"
+                  {...register("firstName", { required: true })}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="lastName">Last name</FormLabel>
+                <Input
+                  id="lastName"
+                  type="text"
+                  placeholder="last name"
+                  {...register("lastName", { required: true })}
+                />
+              </FormControl>
+              <Checkbox
+                size="lg"
                 placeholder="leader"
                 {...register("leader", {})}
-              />
+              >
+                Leader
+              </Checkbox>
 
-              <input type="submit" />
+              <Input type="submit" value="send" />
             </form>
           </ModalBody>
           <ModalFooter>

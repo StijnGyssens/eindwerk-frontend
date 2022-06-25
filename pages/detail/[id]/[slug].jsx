@@ -3,6 +3,11 @@ import axios from "axios";
 import slug from "slug";
 import {
   Button,
+  Container,
+  Flex,
+  Heading,
+  List,
+  ListItem,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -10,6 +15,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import Loginform from "../../../components/forms/loginform";
@@ -31,54 +37,62 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
 
   return (
     <Layout>
-      <p>
-        name {group.name}
+      <Heading>
+        {group.name}
         {value && <NameModal nameG={group.name} group={id} />}
-      </p>
-      <p>
-        description: {group.description}
-        {value && <DescriptionModal descr={group.description} group={id} />}
-      </p>
-      {group.events.length > 0 && (
-        <div>
-          Events:
-          {group.events.map((e) => (
-            <p key={e["@id"]}>{e.name}</p>
-          ))}
-        </div>
-      )}
-      {value && (
-        <EventModal
-          allEvents={event}
-          events={group.events.map((e) => e["@id"])}
-          groupid={group["@id"]}
-          group={id}
-        />
-      )}
-      <div>Fighting style: {group.fightingStyle.fightingStyle}</div>
-      {value && <StyleModal allStyles={fight} group={id} />}
-      <div>Region: {group.historicalRegion.historicalRegion}</div>
+      </Heading>
+      <Text>description:</Text>
+      <Text>{group.description}</Text>
+      {value && <DescriptionModal descr={group.description} group={id} />}
+
+      <Text>Region: {group.historicalRegion.historicalRegion}</Text>
       {value && <RegionModal allRegions={region} group={id} />}
-      {group.members.length > 0 && (
-        <div>
-          <p>Members:</p>
-          {group.members.map((group) => (
-            <p key={group["@id"]}>
-              {group.firstName} {group.lastName}
-            </p>
-          ))}
-        </div>
-      )}
-      {value && (
-        <MemberModal
-          allMembers={member}
-          members={group.members.map((m) => m["@id"])}
-          groupid={group["@id"]}
-          group={id}
-        />
-      )}
-      <p>timeperiode: {group.timeperiode.timeperiode}</p>
+      <Text>Timeperiode: {group.timeperiode.timeperiode}</Text>
       {value && <TimeModal allTimes={timeperiode} group={id} />}
+      <Text>Fighting style: {group.fightingStyle.fightingStyle}</Text>
+      {value && <StyleModal allStyles={fight} group={id} />}
+
+      <Flex justifyContent="space-around" m={0} p={0}>
+        <Container>
+          <Heading size="md">Events:</Heading>
+          {group.events.length > 0 && (
+            <List>
+              {group.events.map((e) => (
+                <ListItem key={e["@id"]}>{e.name}</ListItem>
+              ))}
+            </List>
+          )}
+          {value && (
+            <EventModal
+              allEvents={event}
+              events={group.events.map((e) => e["@id"])}
+              groupid={group["@id"]}
+              group={id}
+            />
+          )}
+        </Container>
+        <Container>
+          <Heading size="md">Members:</Heading>
+          {group.members.length > 0 && (
+            <List>
+              {group.members.map((group) => (
+                <ListItem key={group["@id"]}>
+                  {group.firstName} {group.lastName}
+                </ListItem>
+              ))}
+            </List>
+          )}
+          {value && (
+            <MemberModal
+              allMembers={member}
+              members={group.members.map((m) => m["@id"])}
+              groupid={group["@id"]}
+              group={id}
+            />
+          )}
+        </Container>
+      </Flex>
+
       <Button onClick={onOpen}>login</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

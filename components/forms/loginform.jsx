@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { userContext } from "../../pages/_app";
+import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 
 export default function Loginform({ redirect, onClose = false }) {
   const router = useRouter();
@@ -41,18 +42,26 @@ export default function Loginform({ redirect, onClose = false }) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        type="email"
-        placeholder="username"
-        {...register("username", { required: true })}
-      />
-      <input
-        type="password"
-        placeholder="password"
-        {...register("password", { required: true })}
-      />
+      <FormControl isRequired>
+        <FormLabel htmlFor="email">Email</FormLabel>
+        <Input
+          id="email"
+          type="email"
+          placeholder="email"
+          {...register("username", { required: true })}
+        />
+      </FormControl>
+      <FormControl isRequired>
+        <FormLabel htmlFor="password">Password</FormLabel>
+        <Input
+          id="password"
+          type="password"
+          placeholder="password"
+          {...register("password", { required: true })}
+        />
+      </FormControl>
 
-      <input type="submit" />
+      <Input type="submit" value="send" />
     </form>
   );
 }

@@ -3,7 +3,13 @@ import { useRouter } from "next/router";
 
 import Layout from "../components/layout";
 import axios from "axios";
-import { Input, Select, Textarea } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Select,
+  Textarea,
+} from "@chakra-ui/react";
 
 const Subscribe = ({ fight, region, timeperiode }) => {
   const fights = fight["hydra:member"];
@@ -38,40 +44,63 @@ const Subscribe = ({ fight, region, timeperiode }) => {
   return (
     <Layout>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          type="text"
-          placeholder="Name"
-          {...register("name", { required: true })}
-        />
-        <Input
-          type="text"
-          placeholder="location"
-          {...register("location", { required: true })}
-        />
-        <Textarea {...register("description", {})} />
-        <Select {...register("fightingStyle")}>
-          {fights.map((f) => (
-            <option key={f["@id"]} value={f["@id"]}>
-              {f.fightingStyle}
-            </option>
-          ))}
-        </Select>
-        <Select {...register("historicalRegion", { required: true })}>
-          {regions.map((r) => (
-            <option key={r["@id"]} value={r["@id"]}>
-              {r.historicalRegion}
-            </option>
-          ))}
-        </Select>
-        <Select {...register("timeperiode", { required: true })}>
-          {timeperiodes.map((t) => (
-            <option key={t["@id"]} value={t["@id"]}>
-              {t.timeperiode}
-            </option>
-          ))}
-        </Select>
+        <FormControl isRequired>
+          <FormLabel htmlFor="name">Name</FormLabel>
+          <Input
+            id="name"
+            type="text"
+            placeholder="Name"
+            {...register("name", { required: true })}
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel htmlFor="location">Location</FormLabel>
+          <Input
+            id="location"
+            type="text"
+            placeholder="location"
+            {...register("location", { required: true })}
+          />
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel htmlFor="descr">Description</FormLabel>
+          <Textarea id="descr" {...register("description", {})} />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="style">Fight style</FormLabel>
+          <Select id="style" {...register("fightingStyle")}>
+            {fights.map((f) => (
+              <option key={f["@id"]} value={f["@id"]}>
+                {f.fightingStyle}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="region">Historical region</FormLabel>
+          <Select
+            id="region"
+            {...register("historicalRegion", { required: true })}
+          >
+            {regions.map((r) => (
+              <option key={r["@id"]} value={r["@id"]}>
+                {r.historicalRegion}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="time">Time periode</FormLabel>
+          <Select id="time" {...register("timeperiode", { required: true })}>
+            {timeperiodes.map((t) => (
+              <option key={t["@id"]} value={t["@id"]}>
+                {t.timeperiode}
+              </option>
+            ))}
+          </Select>
+        </FormControl>
 
-        <Input type="submit" />
+        <Input type="submit" value="send" />
       </form>
     </Layout>
   );
