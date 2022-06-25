@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
-export default function MemberModal({ allMembers, members, groupid }) {
+export default function MemberModal({ allMembers, members, groupid, group }) {
   let member = allMembers["hydra:member"];
   const {
     register: registerChange,
@@ -21,7 +21,14 @@ export default function MemberModal({ allMembers, members, groupid }) {
 
   const onSubmitChange = (data) => {
     data.members = [...members, data.members];
-    console.log(JSON.stringify(data));
+    data = JSON.stringify(data);
+    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group}`, data, {
+      headers: {
+        accept: "application/ld+json",
+        "Content-Type": "application/merge-patch+json",
+      },
+      withCredentials: true,
+    });
     onClose();
   };
   const {
@@ -30,7 +37,16 @@ export default function MemberModal({ allMembers, members, groupid }) {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
+    data.groups = [data.groups];
+    data = JSON.stringify(data);
     console.log(data);
+    axios.post(`${process.env.NEXT_PUBLIC_BASEPATH}/members`, data, {
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/ld+json",
+      },
+      withCredentials: true,
+    });
     onClose();
   };
   console.log(errors);
