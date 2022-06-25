@@ -86,7 +86,7 @@ export default function MemberModal({ allMembers, members, groupid, group }) {
               <input
                 type="password"
                 placeholder="password"
-                {...register("password", { required: true })}
+                {...register("simplePassword", { required: true })}
               />
               <input
                 type="text"
