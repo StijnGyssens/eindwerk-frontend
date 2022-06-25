@@ -41,8 +41,8 @@ export default function EventModal({ allEvents, events, groupid, group }) {
     data = JSON.stringify(data);
     axios.post(`${process.env.NEXT_PUBLIC_BASEPATH}/events`, data, {
       headers: {
-        accept: "application/ld+json",
-        "Content-Type": "application/merge-patch+json",
+        accept: "application/json",
+        "Content-Type": "application/ld+json",
       },
       withCredentials: true,
     });
