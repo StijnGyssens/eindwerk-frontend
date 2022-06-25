@@ -39,6 +39,7 @@ export default function EventModal({ allEvents, events, groupid, group }) {
   } = useForm();
   const onSubmit = (data) => {
     data = JSON.stringify(data);
+    console.log(data);
     axios.post(`${process.env.NEXT_PUBLIC_BASEPATH}/events`, data, {
       headers: {
         accept: "application/json",
