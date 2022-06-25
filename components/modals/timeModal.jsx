@@ -12,7 +12,7 @@ import {
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function TimeModal({ allTimes }) {
+export default function TimeModal({ allTimes, group }) {
   const times = allTimes["hydra:member"];
   const {
     register,
