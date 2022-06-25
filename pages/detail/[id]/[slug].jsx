@@ -67,15 +67,15 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
               {group.firstName} {group.lastName}
             </p>
           ))}
-          {value && (
-            <MemberModal
-              allMembers={member}
-              members={group.members.map((m) => m["@id"])}
-              groupid={group["@id"]}
-              group={id}
-            />
-          )}
         </div>
+      )}
+      {value && (
+        <MemberModal
+          allMembers={member}
+          members={group.members.map((m) => m["@id"])}
+          groupid={group["@id"]}
+          group={id}
+        />
       )}
       <p>timeperiode: {group.timeperiode.timeperiode}</p>
       {value && <TimeModal allTimes={timeperiode} group={id} />}
