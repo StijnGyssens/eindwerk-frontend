@@ -22,6 +22,7 @@ export default function RegionModal({ allRegions, groupid }) {
 
   const onSubmit = (data) => {
     data = JSON.stringify(data);
+    console.log(data);
     axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${groupid}`, data, {
       headers: {
         accept: "application/json",
