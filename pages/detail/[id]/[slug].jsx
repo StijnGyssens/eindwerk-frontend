@@ -57,7 +57,7 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
       <div>Fighting style: {group.fightingStyle.fightingStyle}</div>
       {value && <StyleModal allStyles={fight} />}
       <div>Region: {group.historicalRegion.historicalRegion}</div>
-      {value && <RegionModal allRegions={region} groupid={id} />}
+      {!value && <RegionModal allRegions={region} groupid={id} />}
       {group.members.length > 0 && (
         <div>
           <p>Members:</p>

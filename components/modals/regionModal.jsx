@@ -12,7 +12,7 @@ import {
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-export default function RegionModal({ allRegions }) {
+export default function RegionModal({ allRegions, groupid }) {
   const regions = allRegions["hydra:member"];
   const {
     register,
@@ -22,12 +22,13 @@ export default function RegionModal({ allRegions }) {
 
   const onSubmit = (data) => {
     data = JSON.stringify(data);
-    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups`, data, {
+    console.log(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${groupid}`);
+    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${groupid}`, data, {
       withCredentials: true,
     });
     onClose();
   };
-  console.error(errors);
+  /* console.error(errors); */
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
