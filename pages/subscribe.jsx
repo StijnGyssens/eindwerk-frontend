@@ -50,7 +50,6 @@ const Subscribe = ({ fight, region, timeperiode }) => {
         />
         <Textarea {...register("description", {})} />
         <Select {...register("fightingStyle")}>
-          <option value="">none</option>
           {fights.map((f) => (
             <option key={f["@id"]} value={f["@id"]}>
               {f.fightingStyle}
