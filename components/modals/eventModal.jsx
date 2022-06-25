@@ -38,7 +38,14 @@ export default function EventModal({ allEvents, events, groupid, group }) {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log(data);
+    data = JSON.stringify(data);
+    axios.post(`${process.env.NEXT_PUBLIC_BASEPATH}/events`, data, {
+      headers: {
+        accept: "application/ld+json",
+        "Content-Type": "application/merge-patch+json",
+      },
+      withCredentials: true,
+    });
     onClose();
   };
   console.log(errors);
