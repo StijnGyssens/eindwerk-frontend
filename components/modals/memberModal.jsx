@@ -80,8 +80,8 @@ export default function MemberModal({ allMembers, members, groupid, group }) {
             <form onSubmit={handleSubmit(onSubmit)}>
               <input
                 type="email"
-                placeholder="Email"
-                {...register("Email", { required: true })}
+                placeholder="email"
+                {...register("email", { required: true })}
               />
               <input
                 type="password"
