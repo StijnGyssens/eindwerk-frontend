@@ -10,6 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 export default function MemberModal({ allMembers, members, groupid, group }) {
   let member = allMembers["hydra:member"];
