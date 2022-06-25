@@ -55,9 +55,9 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
         />
       )}
       <div>Fighting style: {group.fightingStyle.fightingStyle}</div>
-      {value && <StyleModal allStyles={fight} />}
+      {value && <StyleModal allStyles={fight} group={id} />}
       <div>Region: {group.historicalRegion.historicalRegion}</div>
-      {value && <RegionModal allRegions={region} groupid={id} />}
+      {value && <RegionModal allRegions={region} group={id} />}
       {group.members.length > 0 && (
         <div>
           <p>Members:</p>
@@ -131,6 +131,6 @@ export const getStaticProps = async (context) => {
   );
   return {
     props: { id, group, fight, region, timeperiode, event, member },
-    revalidate: 10,
+    revalidate: 1,
   };
 };

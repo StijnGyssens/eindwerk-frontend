@@ -12,7 +12,7 @@ import {
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-export default function RegionModal({ allRegions, groupid }) {
+export default function RegionModal({ allRegions, group }) {
   const regions = allRegions["hydra:member"];
   const {
     register,
@@ -23,7 +23,7 @@ export default function RegionModal({ allRegions, groupid }) {
   const onSubmit = (data) => {
     data = JSON.stringify(data);
     console.log(data);
-    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${groupid}`, data, {
+    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group}`, data, {
       headers: {
         accept: "application/ld+json",
         "Content-Type": "application/merge-patch+json",
