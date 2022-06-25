@@ -33,11 +33,11 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
     <Layout>
       <p>
         name {group.name}
-        {!value && <NameModal nameG={group.name} />}
+        {value && <NameModal nameG={group.name} />}
       </p>
       <p>
         description: {group.description}
-        {!value && <DescriptionModal descr={group.description} />}
+        {value && <DescriptionModal descr={group.description} />}
       </p>
       {group.events.length > 0 && (
         <div>
@@ -47,7 +47,7 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
           ))}
         </div>
       )}
-      {!value && (
+      {value && (
         <EventModal
           allEvents={event}
           events={group.events.map((e) => e["@id"])}
@@ -55,9 +55,9 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
         />
       )}
       <div>Fighting style: {group.fightingStyle.fightingStyle}</div>
-      {!value && <StyleModal allStyles={fight} />}
+      {value && <StyleModal allStyles={fight} />}
       <div>Region: {group.historicalRegion.historicalRegion}</div>
-      {!value && <RegionModal allRegions={region} />}
+      {value && <RegionModal allRegions={region} />}
       {group.members.length > 0 && (
         <div>
           <p>Members:</p>
@@ -66,7 +66,7 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
               {group.firstName} {group.lastName}
             </p>
           ))}
-          {!value && (
+          {value && (
             <MemberModal
               allMembers={member}
               members={group.members.map((m) => m["@id"])}
@@ -76,7 +76,7 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
         </div>
       )}
       <p>timeperiode: {group.timeperiode.timeperiode}</p>
-      {!value && <TimeModal allTimes={timeperiode} />}
+      {value && <TimeModal allTimes={timeperiode} />}
       <Button onClick={onOpen}>login</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

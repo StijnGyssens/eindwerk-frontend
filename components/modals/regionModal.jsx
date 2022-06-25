@@ -9,6 +9,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 
 export default function RegionModal({ allRegions }) {
@@ -20,10 +21,13 @@ export default function RegionModal({ allRegions }) {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(JSON.stringify(data));
+    data = JSON.stringify(data);
+    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups`, data, {
+      withCredentials: true,
+    });
     onClose();
   };
-  /* console.log(errors); */
+  console.error(errors);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
