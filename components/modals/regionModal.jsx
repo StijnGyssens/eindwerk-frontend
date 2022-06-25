@@ -25,8 +25,8 @@ export default function RegionModal({ allRegions, groupid }) {
     console.log(data);
     axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${groupid}`, data, {
       headers: {
-        accept: "application/json",
-        "Content-Type": "application/ld+json",
+        accept: "application/ld+json",
+        "Content-Type": "application/merge-patch+json",
       },
       withCredentials: true,
     });
