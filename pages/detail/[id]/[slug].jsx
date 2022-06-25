@@ -18,8 +18,12 @@ import { userContext } from "../../_app";
 import NameModal from "../../../components/modals/nameModal";
 import DescriptionModal from "../../../components/modals/descriptionModal";
 import EventModal from "../../../components/modals/eventModal";
+import StyleModal from "../../../components/modals/styleModal";
+import RegionModal from "../../../components/modals/regionModal";
+import TimeModal from "../../../components/modals/timeModal";
+import MemberModal from "../../../components/modals/memberModal";
 
-const Detail = ({ id, group, fight, region, timeperiode, event }) => {
+const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     userid: { value, change },
@@ -43,11 +47,17 @@ const Detail = ({ id, group, fight, region, timeperiode, event }) => {
           ))}
         </div>
       )}
-      {!value && <EventModal all={event} events={group.events} />}
+      {!value && (
+        <EventModal
+          allEvents={event}
+          events={group.events.map((e) => e["@id"])}
+          groupid={group["@id"]}
+        />
+      )}
       <div>Fighting style: {group.fightingStyle.fightingStyle}</div>
-      {value && <Button>change</Button>}
+      {!value && <StyleModal allStyles={fight} />}
       <div>Region: {group.historicalRegion.historicalRegion}</div>
-      {value && <Button>change</Button>}
+      {!value && <RegionModal allRegions={region} />}
       {group.members.length > 0 && (
         <div>
           <p>Members:</p>
@@ -56,10 +66,17 @@ const Detail = ({ id, group, fight, region, timeperiode, event }) => {
               {group.firstName} {group.lastName}
             </p>
           ))}
-          {value && <Button>add member</Button>}
+          {!value && (
+            <MemberModal
+              allMembers={member}
+              members={group.members.map((m) => m["@id"])}
+              groupid={group["@id"]}
+            />
+          )}
         </div>
       )}
       <p>timeperiode: {group.timeperiode.timeperiode}</p>
+      {!value && <TimeModal allTimes={timeperiode} />}
       <Button onClick={onOpen}>login</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -109,8 +126,11 @@ export const getStaticProps = async (context) => {
   const { data: event } = await axios.get(
     `${process.env.NEXT_PUBLIC_BASEPATH}/events`
   );
+  const { data: member } = await axios.get(
+    `${process.env.NEXT_PUBLIC_BASEPATH}/members`
+  );
   return {
-    props: { id, group, fight, region, timeperiode, event },
+    props: { id, group, fight, region, timeperiode, event, member },
     revalidate: 10,
   };
 };
