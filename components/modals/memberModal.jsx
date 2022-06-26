@@ -18,6 +18,7 @@ import axios from "axios";
 
 export default function MemberModal({ allMembers, members, group, change }) {
   let member = allMembers["hydra:member"];
+  const memberList = group.members;
   const {
     register: registerChange,
     handleSubmit: handleSubmitChange,
@@ -29,7 +30,6 @@ export default function MemberModal({ allMembers, members, group, change }) {
       .firstName;
     const memberLast = member.filter((m) => m["@id"] === data.members)[0]
       .lastName;
-    const memberList = group.members;
     change({
       ...group,
       members: [
@@ -62,7 +62,7 @@ export default function MemberModal({ allMembers, members, group, change }) {
     data.groups = [data.groups];
     data = JSON.stringify(data);
     console.log(data);
-    const response = await axios.post(
+    const { data: response } = await axios.post(
       `${process.env.NEXT_PUBLIC_BASEPATH}/members`,
       data,
       {
