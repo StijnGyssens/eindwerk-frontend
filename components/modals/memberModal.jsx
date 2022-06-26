@@ -62,7 +62,7 @@ export default function MemberModal({ allMembers, members, group, change }) {
     data.groups = [data.groups];
     data = JSON.stringify(data);
     console.log(data);
-    const response = axios.post(
+    const { response } = axios.post(
       `${process.env.NEXT_PUBLIC_BASEPATH}/members`,
       data,
       {
