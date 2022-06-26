@@ -46,7 +46,7 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
 
       <Text fontSize="2xl">Region:</Text>
       <Text> {groups.historicalRegion.historicalRegion}</Text>
-      {!value && (
+      {value && (
         <RegionModal allRegions={region} group={groups} change={setGroups} />
       )}
       <Text fontSize="2xl">Timeperiode: </Text>
