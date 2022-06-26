@@ -27,7 +27,7 @@ export default function EventModal({ allEvents, events, group, change }) {
   const onSubmitChange = async (data) => {
     data.events = [...events, data.events];
     data = JSON.stringify(data);
-    const response = axios.patch(
+    const response = await axios.patch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group.id}`,
       data,
       {
