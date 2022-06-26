@@ -13,7 +13,14 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
   Text,
+  Th,
+  Thead,
+  Tr,
   useDisclosure,
 } from "@chakra-ui/react";
 import Loginform from "../../../components/forms/loginform";
@@ -58,11 +65,32 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
 
       <Heading size="md">Events:</Heading>
       {groups.events.length > 0 && (
-        <List>
-          {groups.events.map((e) => (
-            <ListItem key={e["@id"]}>{e.name}</ListItem>
-          ))}
-        </List>
+        <TableContainer>
+          <Table>
+            <Thead>
+              <Tr>
+                <Th>Event name</Th>
+                <Th>Start date/hour</Th>
+                <Th>End date/hour</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {groups.events.map((e) => (
+                <Tr key={e["@id"]}>
+                  <Td>{e.name}</Td>
+                  <Td>
+                    {new Date(e.startDate).toLocaleDateString()}{" "}
+                    {new Date(e.startDate).toLocaleTimeString()}
+                  </Td>
+                  <Td>
+                    {new Date(e.endDate).toLocaleDateString()}{" "}
+                    {new Date(e.endDate).toLocaleTimeString()}
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </TableContainer>
       )}
       {value && (
         <EventModal
