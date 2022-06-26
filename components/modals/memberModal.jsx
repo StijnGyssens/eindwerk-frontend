@@ -73,7 +73,10 @@ export default function MemberModal({ allMembers, members, group, change }) {
         withCredentials: true,
       }
     );
-    console.log(response);
+    change({
+      ...group,
+      members: [...memberList, ...response],
+    });
     onClose();
   };
   console.log(errors);
