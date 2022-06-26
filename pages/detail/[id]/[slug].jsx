@@ -76,7 +76,7 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
           ))}
         </List>
       )}
-      {!value && (
+      {value && (
         <MemberModal
           allMembers={member}
           members={groups.members.map((m) => m["@id"])}
