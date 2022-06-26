@@ -38,7 +38,7 @@ export default function EventModal({ allEvents, events, group, change }) {
         withCredentials: true,
       }
     );
-    console.log(response);
+    change(response);
     onClose();
   };
   const {
