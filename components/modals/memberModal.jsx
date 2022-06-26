@@ -58,11 +58,11 @@ export default function MemberModal({ allMembers, members, group, change }) {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     data.groups = [data.groups];
     data = JSON.stringify(data);
     console.log(data);
-    const { response } = axios.post(
+    const response = await axios.post(
       `${process.env.NEXT_PUBLIC_BASEPATH}/members`,
       data,
       {
