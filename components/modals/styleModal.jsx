@@ -1,5 +1,6 @@
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,6 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
@@ -54,15 +56,15 @@ export default function StyleModal({ allStyles, group, change }) {
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <select {...register("fightingStyle")}>
+              <Select {...register("fightingStyle")}>
                 {styles.map((s) => (
                   <option key={s["@id"]} value={s["@id"]}>
                     {s.fightingStyle}
                   </option>
                 ))}
-              </select>
+              </Select>
 
-              <input type="submit" />
+              <Input type="submit" />
             </form>
           </ModalBody>
           <ModalFooter>

@@ -1,5 +1,7 @@
 import {
   Button,
+  Checkbox,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,12 +9,14 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
+  Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function MemberModal({ allMembers, members, groupid, group }) {
+export default function MemberModal({ allMembers, members, group, change }) {
   let member = allMembers["hydra:member"];
   const {
     register: registerChange,
@@ -21,17 +25,34 @@ export default function MemberModal({ allMembers, members, groupid, group }) {
   } = useForm();
 
   const onSubmitChange = (data) => {
+    const memberFirst = member.filter((m) => m["@id"] === data.members)[0]
+      .firstName;
+    const memberLast = member.filter((m) => m["@id"] === data.members)[0]
+      .lastName;
+    const memberList = group.members;
+    change({
+      ...group,
+      members: [
+        ...memberList,
+        { firstName: memberFirst, lastName: memberLast },
+      ],
+    });
     data.members = [...members, data.members];
     data = JSON.stringify(data);
-    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group}`, data, {
-      headers: {
-        accept: "application/ld+json",
-        "Content-Type": "application/merge-patch+json",
-      },
-      withCredentials: true,
-    });
+    axios.patch(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group.id}`,
+      data,
+      {
+        headers: {
+          accept: "application/ld+json",
+          "Content-Type": "application/merge-patch+json",
+        },
+        withCredentials: true,
+      }
+    );
     onClose();
   };
+
   const {
     register,
     handleSubmit,
@@ -41,13 +62,18 @@ export default function MemberModal({ allMembers, members, groupid, group }) {
     data.groups = [data.groups];
     data = JSON.stringify(data);
     console.log(data);
-    axios.post(`${process.env.NEXT_PUBLIC_BASEPATH}/members`, data, {
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/ld+json",
-      },
-      withCredentials: true,
-    });
+    const response = axios.post(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/members`,
+      data,
+      {
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/ld+json",
+        },
+        withCredentials: true,
+      }
+    );
+    console.log(response);
     onClose();
   };
   console.log(errors);
@@ -64,53 +90,49 @@ export default function MemberModal({ allMembers, members, groupid, group }) {
           <ModalHeader>add member</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <p>Choose an member</p>
+            <Text fontSize="2xl">Choose an member</Text>
             <form onSubmit={handleSubmitChange(onSubmitChange)}>
-              <select {...registerChange("members")}>
+              <Select {...registerChange("members")}>
                 {member.map((m) => (
                   <option key={m["@id"]} value={m["@id"]}>
                     {m.firstName} {m.lastName}
                   </option>
                 ))}
-              </select>
+              </Select>
 
-              <input type="submit" />
+              <Input type="submit" />
             </form>
-            <p>add member</p>
+            <Text fontSize="2xl">add member</Text>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <input
+              <Input
                 type="email"
                 placeholder="email"
                 {...register("email", { required: true })}
               />
-              <input
+              <Input
                 type="password"
                 placeholder="password"
                 {...register("simplePassword", { required: true })}
               />
-              <input
+              <Input
                 type="text"
-                placeholder="firstName"
+                placeholder="first name"
                 {...register("firstName", { required: true })}
               />
-              <input
+              <Input
                 type="text"
-                placeholder="lastName"
+                placeholder="last name"
                 {...register("lastName", { required: true })}
               />
-              <input
-                type="checkbox"
-                placeholder="leader"
-                {...register("leader", {})}
-              />
-              <input
+              <Checkbox {...register("leader", {})}>Leader</Checkbox>
+              <Input
                 type="hidden"
                 placeholder="groups"
-                defaultValue={groupid}
+                defaultValue={group["@id"]}
                 {...register("groups", {})}
               />
 
-              <input type="submit" />
+              <Input type="submit" />
             </form>
           </ModalBody>
           <ModalFooter>
