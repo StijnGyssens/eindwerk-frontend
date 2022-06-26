@@ -12,8 +12,9 @@ import {
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function StyleModal({ allStyles, group }) {
+export default function StyleModal({ allStyles, group, change }) {
   const styles = allStyles["hydra:member"];
+
   const {
     register,
     handleSubmit,
@@ -21,15 +22,22 @@ export default function StyleModal({ allStyles, group }) {
   } = useForm();
 
   const onSubmit = (data) => {
+    const styleName = styles.filter((s) => s["@id"] === data.fightingStyle)[0]
+      .fightingStyle;
+    change({ ...group, fightingStyle: { fightingStyle: styleName } });
     data = JSON.stringify(data);
     console.log(data);
-    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group}`, data, {
-      headers: {
-        accept: "application/ld+json",
-        "Content-Type": "application/merge-patch+json",
-      },
-      withCredentials: true,
-    });
+    axios.patch(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group.id}`,
+      data,
+      {
+        headers: {
+          accept: "application/ld+json",
+          "Content-Type": "application/merge-patch+json",
+        },
+        withCredentials: true,
+      }
+    );
     onClose();
   };
   /* console.log(errors); */

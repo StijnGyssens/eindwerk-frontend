@@ -63,7 +63,9 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
       )}
       <Text fontSize="xl">Fighting style:</Text>
       <Text> {groups.fightingStyle.fightingStyle}</Text>
-      {value && <StyleModal allStyles={fight} group={id} />}
+      {value && (
+        <StyleModal allStyles={fight} group={groups} change={setGroups} />
+      )}
       <Text fontSize="xl">Members:</Text>
       {groups.members.length > 0 && (
         <List>
