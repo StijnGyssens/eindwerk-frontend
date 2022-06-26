@@ -1,5 +1,6 @@
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,12 +8,15 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
+  Text,
+  Textarea,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function EventModal({ allEvents, events, groupid, group }) {
+export default function EventModal({ allEvents, events, group, change }) {
   let event = allEvents["hydra:member"];
   const {
     register: registerChange,
@@ -20,16 +24,21 @@ export default function EventModal({ allEvents, events, groupid, group }) {
     formState: { errors: errorsChange },
   } = useForm();
 
-  const onSubmitChange = (data) => {
+  const onSubmitChange = async (data) => {
     data.events = [...events, data.events];
     data = JSON.stringify(data);
-    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group}`, data, {
-      headers: {
-        accept: "application/ld+json",
-        "Content-Type": "application/merge-patch+json",
-      },
-      withCredentials: true,
-    });
+    const { data: response } = axios.patch(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group.id}`,
+      data,
+      {
+        headers: {
+          accept: "application/ld+json",
+          "Content-Type": "application/merge-patch+json",
+        },
+        withCredentials: true,
+      }
+    );
+    console.log(response);
     onClose();
   };
   const {
@@ -64,49 +73,49 @@ export default function EventModal({ allEvents, events, groupid, group }) {
           <ModalHeader>add event</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <p>Choose an event</p>
+            <Text fontSize="2xl">Choose an event</Text>
             <form onSubmit={handleSubmitChange(onSubmitChange)}>
-              <select {...registerChange("events")}>
+              <Select {...registerChange("events")}>
                 {event.map((e) => (
                   <option key={e["@id"]} value={e["@id"]}>
                     {e.name}
                   </option>
                 ))}
-              </select>
+              </Select>
 
-              <input type="submit" />
+              <Input type="submit" />
             </form>
-            <p>add event</p>
+            <Text fontSize="2xl">add event</Text>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <input
+              <Input
                 type="datetime-local"
                 placeholder="startDate"
                 {...register("startDate", { required: true })}
               />
-              <input
+              <Input
                 type="datetime-local"
                 placeholder="endDate"
                 {...register("endDate", { required: true })}
               />
-              <input
+              <Input
                 type="text"
                 placeholder="name"
                 {...register("name", { required: true })}
               />
-              <input
+              <Input
                 type="text"
                 placeholder="location"
                 {...register("location", { required: true })}
               />
-              <textarea {...register("description", { required: true })} />
+              <Textarea {...register("description", { required: true })} />
               <input
                 type="hidden"
                 placeholder="groups"
-                defaultValue={groupid}
+                defaultValue={group["@id"]}
                 {...register("groups", {})}
               />
 
-              <input type="submit" />
+              <Input type="submit" />
             </form>
           </ModalBody>
           <ModalFooter>

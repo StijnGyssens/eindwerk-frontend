@@ -112,8 +112,8 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
         <EventModal
           allEvents={event}
           events={groups.events.map((e) => e["@id"])}
-          groupid={groups["@id"]}
-          group={id}
+          group={groups}
+          change={setGroups}
         />
       )}
 
