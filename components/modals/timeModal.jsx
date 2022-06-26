@@ -1,5 +1,6 @@
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,12 +8,13 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function TimeModal({ allTimes, group }) {
+export default function TimeModal({ allTimes, group, change }) {
   const times = allTimes["hydra:member"];
   const {
     register,
@@ -21,15 +23,21 @@ export default function TimeModal({ allTimes, group }) {
   } = useForm();
 
   const onSubmit = (data) => {
+    const timeName = times.filter((t) => t["@id"] === data.timeperiode)[0]
+      .timeperiode;
+    change({ ...group, timeperiode: { timeperiode: timeName } });
     data = JSON.stringify(data);
-    console.log(data);
-    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group}`, data, {
-      headers: {
-        accept: "application/ld+json",
-        "Content-Type": "application/merge-patch+json",
-      },
-      withCredentials: true,
-    });
+    axios.patch(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group.id}`,
+      data,
+      {
+        headers: {
+          accept: "application/ld+json",
+          "Content-Type": "application/merge-patch+json",
+        },
+        withCredentials: true,
+      }
+    );
     onClose();
   };
   /* console.log(errors); */
@@ -46,15 +54,15 @@ export default function TimeModal({ allTimes, group }) {
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <select {...register("timeperiode")}>
+              <Select {...register("timeperiode")}>
                 {times.map((t) => (
                   <option key={t["@id"]} value={t["@id"]}>
                     {t.timeperiode}
                   </option>
                 ))}
-              </select>
+              </Select>
 
-              <input type="submit" />
+              <Input type="submit" />
             </form>
           </ModalBody>
           <ModalFooter>
