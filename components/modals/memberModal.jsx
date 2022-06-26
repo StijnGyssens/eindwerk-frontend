@@ -75,7 +75,7 @@ export default function MemberModal({ allMembers, members, group, change }) {
     );
     change({
       ...group,
-      members: [...memberList, ...response],
+      members: [...memberList, response],
     });
     onClose();
   };
