@@ -18,6 +18,7 @@ import axios from "axios";
 
 export default function EventModal({ allEvents, events, group, change }) {
   let event = allEvents["hydra:member"];
+  const eventList = group.events;
   const {
     register: registerChange,
     handleSubmit: handleSubmitChange,
@@ -46,16 +47,23 @@ export default function EventModal({ allEvents, events, group, change }) {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     data.groups = [data.groups];
     data = JSON.stringify(data);
-    console.log(data);
-    axios.post(`${process.env.NEXT_PUBLIC_BASEPATH}/events`, data, {
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/ld+json",
-      },
-      withCredentials: true,
+    const { data: response } = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/events`,
+      data,
+      {
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/ld+json",
+        },
+        withCredentials: true,
+      }
+    );
+    change({
+      ...group,
+      events: [...eventList, response],
     });
     onClose();
   };

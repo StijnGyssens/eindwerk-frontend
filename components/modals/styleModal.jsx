@@ -23,13 +23,9 @@ export default function StyleModal({ allStyles, group, change }) {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    const styleName = styles.filter((s) => s["@id"] === data.fightingStyle)[0]
-      .fightingStyle;
-    change({ ...group, fightingStyle: { fightingStyle: styleName } });
-    data = JSON.stringify(data);
+  const onSubmit = async (data) => {
     console.log(data);
-    axios.patch(
+    const { data: response } = await axios.patch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group.id}`,
       data,
       {
@@ -40,6 +36,7 @@ export default function StyleModal({ allStyles, group, change }) {
         withCredentials: true,
       }
     );
+    change(response);
     onClose();
   };
   /* console.log(errors); */
