@@ -1,5 +1,6 @@
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,12 +8,14 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Textarea,
   useDisclosure,
+  useInputGroupStyles,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function DescriptionModal({ descr, group }) {
+export default function DescriptionModal({ change, group }) {
   const {
     register,
     handleSubmit,
@@ -20,15 +23,20 @@ export default function DescriptionModal({ descr, group }) {
   } = useForm();
 
   const onSubmit = (data) => {
+    change({ ...group, description: data.description });
     data = JSON.stringify(data);
     console.log(data);
-    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group}`, data, {
-      headers: {
-        accept: "application/ld+json",
-        "Content-Type": "application/merge-patch+json",
-      },
-      withCredentials: true,
-    });
+    axios.patch(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group.id}`,
+      data,
+      {
+        headers: {
+          accept: "application/ld+json",
+          "Content-Type": "application/merge-patch+json",
+        },
+        withCredentials: true,
+      }
+    );
     onClose();
   };
   console.log(errors);
@@ -45,12 +53,12 @@ export default function DescriptionModal({ descr, group }) {
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <textarea
-                defaultValue={descr}
+              <Textarea
+                defaultValue={group.description}
                 {...register("description", { required: true })}
               />
 
-              <input type="submit" />
+              <Input type="submit" value="send" />
             </form>
           </ModalBody>
           <ModalFooter>

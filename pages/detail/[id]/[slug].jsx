@@ -3,8 +3,6 @@ import axios from "axios";
 import slug from "slug";
 import {
   Button,
-  Container,
-  Flex,
   Heading,
   List,
   ListItem,
@@ -19,7 +17,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Loginform from "../../../components/forms/loginform";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { userContext } from "../../_app";
 import NameModal from "../../../components/modals/nameModal";
 import DescriptionModal from "../../../components/modals/descriptionModal";
@@ -34,64 +32,63 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
   const {
     userid: { value, change },
   } = useContext(userContext);
+  const [groups, setGroups] = useState(group);
+  console.log(groups);
 
   return (
     <Layout>
       <Heading>
-        {group.name}
-        {value && <NameModal nameG={group.name} group={id} />}
+        {groups.name}
+        {value && <NameModal group={groups} change={setGroups} />}
       </Heading>
-      <Text>description:</Text>
-      <Text>{group.description}</Text>
-      {value && <DescriptionModal descr={group.description} group={id} />}
+      <Text fontSize="2xl">description:</Text>
+      <Text>{groups.description}</Text>
+      {value && <DescriptionModal group={groups} change={setGroups} />}
 
-      <Text>Region: {group.historicalRegion.historicalRegion}</Text>
+      <Text fontSize="2xl">Region:</Text>
+      <Text> {groups.historicalRegion.historicalRegion}</Text>
       {value && <RegionModal allRegions={region} group={id} />}
-      <Text>Timeperiode: {group.timeperiode.timeperiode}</Text>
+      <Text fontSize="2xl">Timeperiode: </Text>
+      <Text>{groups.timeperiode.timeperiode}</Text>
       {value && <TimeModal allTimes={timeperiode} group={id} />}
-      <Text>Fighting style: {group.fightingStyle.fightingStyle}</Text>
+      <Text fontSize="2xl">Fighting style:</Text>
+      <Text> {groups.fightingStyle.fightingStyle}</Text>
       {value && <StyleModal allStyles={fight} group={id} />}
 
-      <Flex justifyContent="space-around" m={0} p={0}>
-        <Container>
-          <Heading size="md">Events:</Heading>
-          {group.events.length > 0 && (
-            <List>
-              {group.events.map((e) => (
-                <ListItem key={e["@id"]}>{e.name}</ListItem>
-              ))}
-            </List>
-          )}
-          {value && (
-            <EventModal
-              allEvents={event}
-              events={group.events.map((e) => e["@id"])}
-              groupid={group["@id"]}
-              group={id}
-            />
-          )}
-        </Container>
-        <Container>
-          <Heading size="md">Members:</Heading>
-          {group.members.length > 0 && (
-            <List>
-              {group.members.map((group) => (
-                <ListItem key={group["@id"]}>
-                  {group.firstName} {group.lastName}
-                </ListItem>
-              ))}
-            </List>
-          )}
-          {value && (
-            <MemberModal
-              allMembers={member}
-              members={group.members.map((m) => m["@id"])}
-              groupid={group["@id"]}
-              group={id}
-            />
-          )}
-        </Container>
-      </Flex>
+      <Heading size="md">Events:</Heading>
+      {groups.events.length > 0 && (
+        <List>
+          {groups.events.map((e) => (
+            <ListItem key={e["@id"]}>{e.name}</ListItem>
+          ))}
+        </List>
+      )}
+      {value && (
+        <EventModal
+          allEvents={event}
+          events={groups.events.map((e) => e["@id"])}
+          groupid={groups["@id"]}
+          group={id}
+        />
+      )}
+      <Heading size="md">Members:</Heading>
+      {groups.members.length > 0 && (
+        <List>
+          {groups.members.map((group) => (
+            <ListItem key={group["@id"]}>
+              {group.firstName} {group.lastName}
+            </ListItem>
+          ))}
+        </List>
+      )}
+      {value && (
+        <MemberModal
+          allMembers={member}
+          members={groups.members.map((m) => m["@id"])}
+          groupid={groups["@id"]}
+          group={id}
+        />
+      )}
 
       <Button onClick={onOpen}>login</Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -107,6 +104,9 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      {/* <Button onClick={() => setGroups({ ...groups, name: "change" })}>
+        change name
+      </Button> */}
     </Layout>
   );
 };

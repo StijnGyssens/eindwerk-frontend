@@ -1,5 +1,6 @@
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -12,7 +13,7 @@ import {
 import { useForm } from "react-hook-form";
 import axios from "axios";
 
-export default function NameModal({ nameG, group }) {
+export default function NameModal({ change, group }) {
   const {
     register,
     handleSubmit,
@@ -20,15 +21,20 @@ export default function NameModal({ nameG, group }) {
   } = useForm();
 
   const onSubmit = (data) => {
+    change({ ...group, name: data.name });
     data = JSON.stringify(data);
     console.log(data);
-    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group}`, data, {
-      headers: {
-        accept: "application/ld+json",
-        "Content-Type": "application/merge-patch+json",
-      },
-      withCredentials: true,
-    });
+    axios.patch(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group.id}`,
+      data,
+      {
+        headers: {
+          accept: "application/ld+json",
+          "Content-Type": "application/merge-patch+json",
+        },
+        withCredentials: true,
+      }
+    );
     onClose();
   };
   console.log(errors);
@@ -45,14 +51,14 @@ export default function NameModal({ nameG, group }) {
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <input
-                defaultValue={nameG}
+              <Input
+                defaultValue={group.name}
                 type="text"
                 placeholder="name"
                 {...register("name", { required: true })}
               />
 
-              <input type="submit" />
+              <Input type="submit" value="send" />
             </form>
           </ModalBody>
           <ModalFooter>
