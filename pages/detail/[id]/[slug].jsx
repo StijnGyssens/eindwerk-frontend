@@ -62,8 +62,26 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
       <Text fontSize="2xl">Fighting style:</Text>
       <Text> {groups.fightingStyle.fightingStyle}</Text>
       {value && <StyleModal allStyles={fight} group={id} />}
+      <Text fontSize="2xl">Members:</Text>
+      {groups.members.length > 0 && (
+        <List>
+          {groups.members.map((group) => (
+            <ListItem key={group["@id"]}>
+              {group.firstName} {group.lastName}
+            </ListItem>
+          ))}
+        </List>
+      )}
+      {value && (
+        <MemberModal
+          allMembers={member}
+          members={groups.members.map((m) => m["@id"])}
+          groupid={groups["@id"]}
+          group={id}
+        />
+      )}
 
-      <Heading size="md">Events:</Heading>
+      <Heading size="xl">Events:</Heading>
       {groups.events.length > 0 && (
         <TableContainer>
           <Table>
@@ -96,24 +114,6 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
         <EventModal
           allEvents={event}
           events={groups.events.map((e) => e["@id"])}
-          groupid={groups["@id"]}
-          group={id}
-        />
-      )}
-      <Heading size="md">Members:</Heading>
-      {groups.members.length > 0 && (
-        <List>
-          {groups.members.map((group) => (
-            <ListItem key={group["@id"]}>
-              {group.firstName} {group.lastName}
-            </ListItem>
-          ))}
-        </List>
-      )}
-      {value && (
-        <MemberModal
-          allMembers={member}
-          members={groups.members.map((m) => m["@id"])}
           groupid={groups["@id"]}
           group={id}
         />
