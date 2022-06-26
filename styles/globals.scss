@@ -5,10 +5,15 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-
+.chakra-ui-light{
+  background: #d7cdc5;
+}
 a {
   color: inherit;
   text-decoration: none;
+}
+h1,h2,h3,h4{
+  color: #5F021F;
 }
 
 * {

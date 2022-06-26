@@ -15,7 +15,7 @@ export default function Home({ data }) {
   return (
     <Layout title="Home">
       <Heading as={"h1"} size="2xl">
-        Living History
+        Glimpse of the Past
       </Heading>
       <Heading as={"h2"} size="xl">
         Info about the site

@@ -1,4 +1,7 @@
 import {
+  FormLabel,
+  Heading,
+  Input,
   Link,
   Table,
   TableCaption,
@@ -12,14 +15,28 @@ import {
 import slug from "slug";
 import Layout from "../components/layout";
 import axios from "axios";
+import { useState } from "react";
 
 const list = ({ data }) => {
   const groups = data["hydra:member"];
+  const [grouplist, setGrouplist] = useState(groups);
+
+  const handlefilter = (e) => {
+    setGrouplist(groups.filter((g) => g.name.includes(e.target.value)));
+  };
+
   return (
     <Layout title="list">
+      <Heading>Find a reenactment group</Heading>
+      <Input
+        placeholder="Search group by name"
+        onChange={handlefilter}
+        htmlSize={30}
+        width="auto"
+      />
       <TableContainer>
         <Table>
-          <TableCaption placement="top">
+          <TableCaption placement="top" fontSize="2xl">
             List of reenactment groups
           </TableCaption>
           <Thead>
@@ -33,7 +50,7 @@ const list = ({ data }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {groups.map(
+            {grouplist.map(
               ({
                 id,
                 name,

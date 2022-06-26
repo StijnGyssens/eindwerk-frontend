@@ -47,27 +47,27 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
         {groups.name}
         {value && <NameModal group={groups} change={setGroups} />}
       </Heading>
-      <Text fontSize="2xl">description:</Text>
+      <Text fontSize="xl">description:</Text>
       <Text>{groups.description}</Text>
       {value && <DescriptionModal group={groups} change={setGroups} />}
 
-      <Text fontSize="2xl">Region:</Text>
+      <Text fontSize="xl">Region:</Text>
       <Text> {groups.historicalRegion.historicalRegion}</Text>
       {value && (
         <RegionModal allRegions={region} group={groups} change={setGroups} />
       )}
-      <Text fontSize="2xl">Timeperiode: </Text>
+      <Text fontSize="xl">Timeperiode: </Text>
       <Text>{groups.timeperiode.timeperiode}</Text>
       {value && <TimeModal allTimes={timeperiode} group={id} />}
-      <Text fontSize="2xl">Fighting style:</Text>
+      <Text fontSize="xl">Fighting style:</Text>
       <Text> {groups.fightingStyle.fightingStyle}</Text>
       {value && <StyleModal allStyles={fight} group={id} />}
-      <Text fontSize="2xl">Members:</Text>
+      <Text fontSize="xl">Members:</Text>
       {groups.members.length > 0 && (
         <List>
           {groups.members.map((group) => (
             <ListItem key={group["@id"]}>
-              {group.firstName} {group.lastName}
+              {`${group.firstName} ${group.lastName}`}
             </ListItem>
           ))}
         </List>
@@ -81,7 +81,7 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
         />
       )}
 
-      <Heading size="xl">Events:</Heading>
+      <Heading size="lg">Events:</Heading>
       {groups.events.length > 0 && (
         <TableContainer>
           <Table>
@@ -97,12 +97,14 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
                 <Tr key={e["@id"]}>
                   <Td>{e.name}</Td>
                   <Td>
-                    {new Date(e.startDate).toLocaleDateString()}{" "}
-                    {new Date(e.startDate).toLocaleTimeString()}
+                    {`${new Date(e.startDate).toLocaleDateString()} ${new Date(
+                      e.startDate
+                    ).toLocaleTimeString()}`}
                   </Td>
                   <Td>
-                    {new Date(e.endDate).toLocaleDateString()}{" "}
-                    {new Date(e.endDate).toLocaleTimeString()}
+                    {`${new Date(e.endDate).toLocaleDateString()} ${new Date(
+                      e.endDate
+                    ).toLocaleTimeString()}`}
                   </Td>
                 </Tr>
               ))}
