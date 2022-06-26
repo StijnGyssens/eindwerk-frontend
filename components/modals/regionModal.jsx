@@ -1,5 +1,6 @@
 import {
   Button,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,12 +8,13 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Select,
   useDisclosure,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 
-export default function RegionModal({ allRegions, group }) {
+export default function RegionModal({ allRegions, group, change }) {
   const regions = allRegions["hydra:member"];
   const {
     register,
@@ -21,15 +23,25 @@ export default function RegionModal({ allRegions, group }) {
   } = useForm();
 
   const onSubmit = (data) => {
-    data = JSON.stringify(data);
-    console.log(data);
-    axios.patch(`${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group}`, data, {
-      headers: {
-        accept: "application/ld+json",
-        "Content-Type": "application/merge-patch+json",
-      },
-      withCredentials: true,
+    const regionName = regions.filter(
+      (r) => r["@id"] === data.historicalRegion
+    )[0].historicalRegion;
+    change({
+      ...group,
+      historicalRegion: { historicalRegion: regionName },
     });
+    data = JSON.stringify(data);
+    axios.patch(
+      `${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group.id}`,
+      data,
+      {
+        headers: {
+          accept: "application/ld+json",
+          "Content-Type": "application/merge-patch+json",
+        },
+        withCredentials: true,
+      }
+    );
     onClose();
   };
   /* console.error(errors); */
@@ -46,15 +58,15 @@ export default function RegionModal({ allRegions, group }) {
           <ModalCloseButton />
           <ModalBody>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <select {...register("historicalRegion")}>
+              <Select {...register("historicalRegion")}>
                 {regions.map((r) => (
                   <option key={r["@id"]} value={r["@id"]}>
                     {r.historicalRegion}
                   </option>
                 ))}
-              </select>
+              </Select>
 
-              <input type="submit" />
+              <Input type="submit" value="send" />
             </form>
           </ModalBody>
           <ModalFooter>
