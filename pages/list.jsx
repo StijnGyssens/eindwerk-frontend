@@ -17,7 +17,7 @@ import Layout from "../components/layout";
 import axios from "axios";
 import { useState } from "react";
 
-const list = ({ data }) => {
+const List = ({ data }) => {
   const groups = data["hydra:member"];
   const [grouplist, setGrouplist] = useState(groups);
 
@@ -78,7 +78,7 @@ const list = ({ data }) => {
   );
 };
 
-export default list;
+export default List;
 
 export const getStaticProps = async () => {
   const { data } = await axios.get(
