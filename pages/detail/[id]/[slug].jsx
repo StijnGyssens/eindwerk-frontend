@@ -96,16 +96,8 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
               {groups.events.map((e) => (
                 <Tr key={e["@id"]}>
                   <Td>{e.name}</Td>
-                  <Td>
-                    {`${new Date(e.startDate).toLocaleDateString()} ${new Date(
-                      e.startDate
-                    ).toLocaleTimeString()}`}
-                  </Td>
-                  <Td>
-                    {`${new Date(e.endDate).toLocaleDateString()} ${new Date(
-                      e.endDate
-                    ).toLocaleTimeString()}`}
-                  </Td>
+                  <Td>{e.startDate}</Td>
+                  <Td>{e.endDate}</Td>
                 </Tr>
               ))}
             </Tbody>
