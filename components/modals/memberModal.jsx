@@ -25,21 +25,10 @@ export default function MemberModal({ allMembers, members, group, change }) {
     formState: { errors: errorsChange },
   } = useForm();
 
-  const onSubmitChange = (data) => {
-    const memberFirst = member.filter((m) => m["@id"] === data.members)[0]
-      .firstName;
-    const memberLast = member.filter((m) => m["@id"] === data.members)[0]
-      .lastName;
-    change({
-      ...group,
-      members: [
-        ...memberList,
-        { firstName: memberFirst, lastName: memberLast },
-      ],
-    });
+  const onSubmitChange = async (data) => {
     data.members = [...members, data.members];
     data = JSON.stringify(data);
-    axios.patch(
+    const { data: response } = await axios.patch(
       `${process.env.NEXT_PUBLIC_BASEPATH}/groups/${group.id}`,
       data,
       {
@@ -50,6 +39,7 @@ export default function MemberModal({ allMembers, members, group, change }) {
         withCredentials: true,
       }
     );
+    change(response);
     onClose();
   };
 
