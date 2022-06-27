@@ -43,7 +43,7 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
 
   return (
     <Layout>
-      <Heading>
+      <Heading mb={10}>
         {groups.name}
         {value && <NameModal group={groups} change={setGroups} />}
       </Heading>
@@ -51,22 +51,30 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
       <Text>{groups.description}</Text>
       {value && <DescriptionModal group={groups} change={setGroups} />}
 
-      <Text fontSize="xl">Region:</Text>
+      <Text fontSize="xl" mt={5}>
+        Region:
+      </Text>
       <Text> {groups.historicalRegion.historicalRegion}</Text>
       {value && (
         <RegionModal allRegions={region} group={groups} change={setGroups} />
       )}
-      <Text fontSize="xl">Timeperiode: </Text>
+      <Text fontSize="xl" mt={5}>
+        Timeperiode:{" "}
+      </Text>
       <Text>{groups.timeperiode.timeperiode}</Text>
       {value && (
         <TimeModal allTimes={timeperiode} group={groups} change={setGroups} />
       )}
-      <Text fontSize="xl">Fighting style:</Text>
+      <Text fontSize="xl" mt={5}>
+        Fighting style:
+      </Text>
       <Text> {groups.fightingStyle.fightingStyle}</Text>
       {value && (
         <StyleModal allStyles={fight} group={groups} change={setGroups} />
       )}
-      <Text fontSize="xl">Members:</Text>
+      <Text fontSize="xl" mt={5}>
+        Members:
+      </Text>
       {groups.members.length > 0 && (
         <List>
           {groups.members.map((group) => (
@@ -85,7 +93,9 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
         />
       )}
 
-      <Heading size="lg">Events:</Heading>
+      <Heading size="lg" mt={5}>
+        Events:
+      </Heading>
       {groups.events.length > 0 && (
         <TableContainer>
           <Table>
@@ -117,7 +127,9 @@ const Detail = ({ id, group, fight, region, timeperiode, event, member }) => {
         />
       )}
 
-      <Button onClick={onOpen}>login</Button>
+      <Button onClick={onOpen} pos="fixed" top={10} right={20}>
+        login
+      </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

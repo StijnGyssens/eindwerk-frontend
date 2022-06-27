@@ -14,10 +14,10 @@ export default function Home({ data }) {
   const fight = data["hydra:member"];
   return (
     <Layout title="Home">
-      <Heading as={"h1"} size="2xl">
+      <Heading as={"h1"} size="2xl" mb={10}>
         Glimpse of the Past
       </Heading>
-      <Heading as={"h2"} size="xl">
+      <Heading as={"h2"} size="xl" mb={2}>
         Info about the site
       </Heading>
       <Text>
@@ -28,12 +28,12 @@ export default function Home({ data }) {
         On this page is also a short description about the fighting styles a
         group can have.
       </Text>
-      <Text>
+      <Text mb={10}>
         For reenactment groups: if you want to join the site just fill in the
         form at &quot;Join the site&quot;, if you have a different fighting
         style than in the options you can contact me
       </Text>
-      <Heading as={"h3"} size="lg">
+      <Heading as={"h3"} size="lg" mb={2}>
         Fighting styles
       </Heading>
       <TableContainer>

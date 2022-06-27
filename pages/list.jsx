@@ -27,14 +27,14 @@ const List = ({ data }) => {
 
   return (
     <Layout title="list">
-      <Heading>Find a reenactment group</Heading>
+      <Heading mb={10}>Find a reenactment group</Heading>
       <Input
         placeholder="Search group by name"
         onChange={handlefilter}
         htmlSize={30}
         width="auto"
       />
-      <TableContainer>
+      <TableContainer mb={10}>
         <Table>
           <TableCaption placement="top" fontSize="2xl">
             List of reenactment groups

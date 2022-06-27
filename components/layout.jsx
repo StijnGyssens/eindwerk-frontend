@@ -11,7 +11,7 @@ const Layout = ({ children, title }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <nav>
-        <Flex justify="space-around">
+        <Flex justify="space-around" my={5}>
           <Link href="/">
             <a>Home</a>
           </Link>
