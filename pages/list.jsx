@@ -1,4 +1,5 @@
 import {
+  Button,
   FormLabel,
   Heading,
   Input,
@@ -22,7 +23,11 @@ const List = ({ data }) => {
   const [grouplist, setGrouplist] = useState(groups);
 
   const handlefilter = (e) => {
-    setGrouplist(groups.filter((g) => g.name.includes(e.target.value)));
+    setGrouplist(
+      groups.filter((g) =>
+        g.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
   };
 
   return (
@@ -66,7 +71,9 @@ const List = ({ data }) => {
                   <Td>{timeperiode}</Td>
                   <Td>{location}</Td>
                   <Td>
-                    <Link href={`/detail/${id}/${slug(name)}`}>more info</Link>
+                    <Link href={`/detail/${id}/${slug(name)}`}>
+                      <Button>more info</Button>
+                    </Link>
                   </Td>
                 </Tr>
               )
